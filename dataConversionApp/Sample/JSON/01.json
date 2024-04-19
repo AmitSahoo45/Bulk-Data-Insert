@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Amit Sharma",
+    "salary": 50000,
+    "city": "Delhi"
+  },
+  {
+    "name": "Priya Singh",
+    "salary": 60000,
+    "city": "Mumbai"
+  },
+  {
+    "name": "Rahul Verma",
+    "salary": 45000,
+    "city": "Bangalore"
+  },
+  {
+    "name": "Neha Patel",
+    "salary": 55000,
+    "city": "Ahmedabad"
+  },
+  {
+    "name": "Deepak Gupta",
+    "salary": 48000,
+    "city": "Kolkata"
+  }
+]

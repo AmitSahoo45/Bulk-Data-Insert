@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EmployeeDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DeletedEmployeeIDs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="empID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="empId" />
+          </Key>
+          <Property Name="empId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="salary" Type="int" Nullable="false" />
+          <Property Name="city" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <Function Name="getAllEmps" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetNextAvailableEmpID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="ProcessNextEmployeeID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NewEmpId" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="sp_GetAllEmps" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="stprc_User_InsertIntoTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="salary" Type="int" Mode="In" />
+          <Parameter Name="city" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="stprc_Users_DeleteFromUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="empId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="stprc_Users_DeleteMultipleUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="stprc_Users_GetAllUsers_SearchByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="search" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="stprc_Users_UpdateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="empId" Type="int" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="salary" Type="int" Mode="In" />
+          <Parameter Name="city" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="EmployeeDBModelStoreContainer">
+          <EntitySet Name="DeletedEmployeeIDs" EntityType="Self.DeletedEmployeeIDs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DeletedEmployeeID">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="empID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="empId" />
+          </Key>
+          <Property Name="empId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="salary" Type="Int32" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="EmployeeDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DeletedEmployeeIDs" EntityType="Self.DeletedEmployeeID" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <FunctionImport Name="getAllEmps" ReturnType="Collection(EmployeeDBModel.getAllEmps_Result)" />
+          <FunctionImport Name="ProcessNextEmployeeID">
+            <Parameter Name="NewEmpId" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetAllEmps" ReturnType="Collection(EmployeeDBModel.sp_GetAllEmps_Result)" />
+          <FunctionImport Name="stprc_User_InsertIntoTable">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="salary" Mode="In" Type="Int32" />
+            <Parameter Name="city" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="stprc_Users_DeleteFromUsers">
+            <Parameter Name="empId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stprc_Users_DeleteMultipleUsers" />
+          <FunctionImport Name="stprc_Users_GetAllUsers_SearchByName" ReturnType="Collection(EmployeeDBModel.stprc_Users_GetAllUsers_SearchByName_Result)">
+            <Parameter Name="search" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="stprc_Users_UpdateUser">
+            <Parameter Name="empId" Mode="In" Type="Int32" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="salary" Mode="In" Type="Int32" />
+            <Parameter Name="city" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="getAllEmps_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Salary" Nullable="false" />
+          <Property Type="String" Name="EmpUnique" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_GetAllEmps_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Salary" Nullable="false" />
+          <Property Type="String" Name="EmpUnique" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="stprc_Users_GetAllUsers_SearchByName_Result">
+          <Property Type="Int32" Name="empId" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="salary" Nullable="false" />
+          <Property Type="String" Name="city" Nullable="false" MaxLength="200" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeDBModelStoreContainer" CdmEntityContainer="EmployeeDBEntities">
+          <EntitySetMapping Name="DeletedEmployeeIDs">
+            <EntityTypeMapping TypeName="EmployeeDBModel.DeletedEmployeeID">
+              <MappingFragment StoreEntitySet="DeletedEmployeeIDs">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="empID" ColumnName="empID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="EmployeeDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="empId" ColumnName="empId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="city" ColumnName="city" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getAllEmps" FunctionName="EmployeeDBModel.Store.getAllEmps">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeDBModel.getAllEmps_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="EmpUnique" ColumnName="EmpUnique" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProcessNextEmployeeID" FunctionName="EmployeeDBModel.Store.ProcessNextEmployeeID" />
+          <FunctionImportMapping FunctionImportName="sp_GetAllEmps" FunctionName="EmployeeDBModel.Store.sp_GetAllEmps">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeDBModel.sp_GetAllEmps_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="EmpUnique" ColumnName="EmpUnique" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stprc_User_InsertIntoTable" FunctionName="EmployeeDBModel.Store.stprc_User_InsertIntoTable" />
+          <FunctionImportMapping FunctionImportName="stprc_Users_DeleteFromUsers" FunctionName="EmployeeDBModel.Store.stprc_Users_DeleteFromUsers" />
+          <FunctionImportMapping FunctionImportName="stprc_Users_DeleteMultipleUsers" FunctionName="EmployeeDBModel.Store.stprc_Users_DeleteMultipleUsers" />
+          <FunctionImportMapping FunctionImportName="stprc_Users_GetAllUsers_SearchByName" FunctionName="EmployeeDBModel.Store.stprc_Users_GetAllUsers_SearchByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeDBModel.stprc_Users_GetAllUsers_SearchByName_Result">
+                <ScalarProperty Name="empId" ColumnName="empId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="city" ColumnName="city" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stprc_Users_UpdateUser" FunctionName="EmployeeDBModel.Store.stprc_Users_UpdateUser" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
